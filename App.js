@@ -1,13 +1,17 @@
-import Laby from "./HexLaby.js";
+import Maze from "./src/HexMaze.js";
 
 export default class App {
 	/**
 	 * Méthode principale. Sera appelée après le chargement de la page.
 	 */
 	static main() {
-		var laby = new Laby(12, 10);
-		laby.createRooms();
-		app.appendChild(laby.render(30));
+		var app = document.getElementById("app");
+		Maze.rendererClass = "SVGFlat";
+		var maze = new Maze(4, 11);
+		maze.createRooms();
+		maze.render(40).then(svg => {
+			app.appendChild(svg);
+		});
 	}
 	/**
 	 * Charge un fichier JSON.
@@ -15,7 +19,7 @@ export default class App {
 	 * @returns {Promise} Promise résolue avec le JSON
 	 */
 	static chargerJson(url) {
-		return new Promise(function(resolve) {
+		return new Promise(function (resolve) {
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET", url);
 			xhr.responseType = "json";

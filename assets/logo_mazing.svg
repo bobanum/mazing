@@ -1,0 +1,4 @@
+<svg width="464" height="384" version="1.1" viewBox="0 0 464 384" xmlns="http://www.w3.org/2000/svg">
+    <path d="m80 384v-292c0-6.6274 5.3726-12 12-12h24c6.6274 0 12 5.3726 12 12v92c0 13.255 10.745 24 24 24h160c13.255 0 24-10.745 24-24v-92c0-6.6274 5.3726-12 12-12h24c6.6274 0 12 5.3726 12 12v292m80 0v-360c0-13.255-10.745-24-24-24h-160c-13.255 0-24 10.745-24 24v92c0 6.6274-5.3726 12-12 12h-24c-6.6274 0-12-5.3726-12-12v-92c0-13.255-10.745-24-24-24h-160c-13.255 0-24 10.745-24 24v360" fill="#06067c" fill-rule="evenodd" stop-color="#000000" stroke-width="96" style="paint-order:markers stroke fill"/>
+    <path d="m152 256c-13.255 0-24 10.745-24 24v104h80v-36c0-6.6274 5.3726-12 12-12h24c6.6274 0 12 5.3726 12 12v36h80v-104c0-13.255-10.745-24-24-24z" fill="#c7a500" fill-rule="evenodd" stop-color="#000000" stroke-width="96" style="-inkscape-stroke:none;font-variation-settings:normal;paint-order:markers stroke fill"/>
+</svg>

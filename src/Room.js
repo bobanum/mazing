@@ -10,12 +10,6 @@ export default class Room extends Cell {
 		var vertices = this.corners.map(corner => corner.toString(scale)).join(" ");
 		return `M ${vertices} z`;
 	}
-	render(scale) {
-		var result = document.createElementNS("http://www.w3.org/2000/svg", "path");
-		result.classList.add("room");
-		result.setAttribute("d", this.toString(scale));
-		return result;
-	}
 	static fromCorners(corners) {
 		var result = new this();
 		result.corners = corners;
