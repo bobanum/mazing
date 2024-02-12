@@ -66,6 +66,12 @@ export default class Maze {
 			}
 		}
 	}
+	addWall(...corners) {
+		for (let i = 1; i < corners.length; i++) {
+			this.walls.push(new Wall(corners[i-1], corners[i]));
+		}
+		return this;
+	}
 	addRooms() {
 		for (let r = 1; r < this.height; r++) {
 			for (let c = 1; c < this.width; c++) {

@@ -26,64 +26,32 @@ export default class HexMaze extends Maze {
 	addWalls() {
 		for (let r = 0; r < this.height; r++) {
 			if (r % 2 === 1) {
-				this.walls.push(new Wall(this.getCorner(r - 1, 0, 4), this.getCorner(r - 1, 0, 3)));
+				this.addWall(...this.getCorner(r - 1, 0, [4, 3]));
 			}
 			for (let c = 0; c < this.width; c++) {
-				let c0 = this.getCorner(r, c);
-				let c1 = this.getCorner(r, c, 1);
-				let c5 = this.getCorner(r, c, 5);
-				this.walls.push(new Wall(c5, c0));
-				this.walls.push(new Wall(c0, c1));
+				this.addWall(...this.getCorner(r, c, [5, 0, 1]));
 			}
 			if (r > 0 && r % 2 === 0) {
-				this.walls.push(new Wall(this.getCorner(r - 1, this.width - 1, 3), this.getCorner(r - 1, this.width - 1, 2)));
+				this.addWall(...this.getCorner(r - 1, this.width - 1, [3, 2]));
 			}
 			for (let c = 0; c <= this.width; c++) {
-				let c4 = this.getCorner(r, c, 4);
-				let c5 = this.getCorner(r, c, 5);
-				this.walls.push(new Wall(c4, c5));
+				this.addWall(...this.getCorner(r, c, [4, 5]));
 			}
 		}
-		let r = this.height-1;
-		if (r % 2 === 1) {
-			// this.walls.push(new Wall(this.getCorner(r, 0, 4), this.getCorner(r, 0, 3)));
-		}
+		let r = this.height - 1;
 		for (let c = 0; c < this.width; c++) {
-			let c2 = this.getCorner(r, c, 2);
-			let c3 = this.getCorner(r, c, 3);
-			let c4 = this.getCorner(r, c,4);
-			this.walls.push(new Wall(c4, c3));
-			this.walls.push(new Wall(c3, c2));
+			this.addWall(...this.getCorner(r, c, [4, 3, 2]));
 		}
-	}
-	getCorner0(r, c, a = 0) {
-		const extra = (r > 0) ? 1 : 0;
-		const supra = (r === 0) ? 1 : 0;
-		const c0 = r * (this.width * 2 + 1) + c + r % 2 + (r - 1) - supra * (r - 1);
-		switch (a) {
-			case 0:
-				return this.corners[c0];
-			case 1:
-				return this.corners[c0 + this.width + 2 - supra - (r % 2)];
-			case 2:
-				return this.corners[c0 + 2 * this.width + 3 - supra - (r % 2)];
-			case 3:
-				return this.corners[c0 + 3 * this.width + 3 - supra];
-			case 4:
-				return this.corners[c0 + 2 * this.width + 2 - supra - (r % 2)];
-			case 5:
-				return this.corners[c0 + this.width + 1 - supra - (r % 2)];
-			default:
-				throw new Error("Invalid corner");
-		}
-		return result;
 	}
 	getCorner(r, c, a = 0) {
+		if (a instanceof Array) {
+			return a.map(a => this.getCorner(r, c, a));
+		}
 		var result = r * (this.width * 2) + r;
 		result += ((r === 0) ? 0 : 1) * (r - 1);
 		if (a > 0) result += this.width + ((r === 0) ? 0 : 1);
 		if (a === 2 || a === 3) result += this.width + 2;
-		if (a === 0 || (a === 3 && r < this.height-1)) result += (r % 2);
+		if (a === 0 || (a === 3 && r < this.height - 1)) result += (r % 2);
 		if (a === 1 || a === 4) result += 1;
 		if (a === 3 || a === 4) result += this.width;
 		result += c;
