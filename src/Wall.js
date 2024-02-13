@@ -16,4 +16,18 @@ export default class Wall extends Edge {
 	toString(scale = 1) {
 		return `M ${this.start.toString(scale)} ${this.end.toString(scale)}`;
 	}
+	static fromCorners(start, end, room = null) {
+		var wall;
+		if (wall = start.wallTo(end)) {
+			wall.rooms[0] = room;
+			return wall;
+		}
+		if (wall = end.wallTo(start)) {
+			wall.rooms[1] = room;
+			return wall;
+		}
+		wall = new this(start, end);
+		wall.rooms[1] = room;
+		return wall;
+	}
 }

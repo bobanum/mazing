@@ -3,7 +3,6 @@ import Renderer from "./Renderer.js";
 export default class SVGFlat extends Renderer {	
 	render() {
 		const maze = this.maze;
-		console.log(this.scale, maze.width * this.scale);
 		var result = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 		result.setAttribute("viewBox", `${-maze.cellSize} ${-maze.cellSize} ${2*(maze.width + 1) * maze.cellSize} ${(1.5*(maze.height)+.5+4) * maze.cellSize}`);
 		// result.setAttribute("width", maze.width * this.scale);
@@ -20,16 +19,16 @@ export default class SVGFlat extends Renderer {
 		maze.corners.forEach(corner => {
 			corners.appendChild(this.renderCorner(corner));
 		});
-		var walls = result.appendChild(document.createElementNS("http://www.w3.org/2000/svg", "g"));
-		walls.classList.add("walls");
-		maze.walls.forEach(wall => {
-			walls.appendChild(this.renderWall(wall));
-		});
-		// var rooms = result.appendChild(document.createElementNS("http://www.w3.org/2000/svg", "g"));
-		// rooms.style.fill = "#00f8";
-		// maze.rooms.forEach(room => {
-		// 	rooms.appendChild(room.render(maze.cellSize));
+		// var walls = result.appendChild(document.createElementNS("http://www.w3.org/2000/svg", "g"));
+		// walls.classList.add("walls");
+		// maze.walls.forEach(wall => {
+		// 	walls.appendChild(this.renderWall(wall));
 		// });
+		var rooms = result.appendChild(document.createElementNS("http://www.w3.org/2000/svg", "g"));
+		rooms.classList.add("rooms");
+		maze.rooms.forEach(room => {
+			rooms.appendChild(this.renderRoom(room));
+		});
 		// maze.walls.forEach(wall => {
 		// 	walls.appendChild(wall.render(maze.cellSize));
 		// });
@@ -46,18 +45,21 @@ export default class SVGFlat extends Renderer {
 		result.setAttribute("cx", corner.x);
 		result.setAttribute("cy", corner.y);
 		result.setAttribute("r", 1);
+		corner.svg = result;
 		return result;
 	}
 	renderWall(wall) {
 		var result = document.createElementNS("http://www.w3.org/2000/svg", "path");
 		result.classList.add("wall");
 		result.setAttribute("d", wall.toString());
+		wall.svg = result;
 		return result;
 	}
 	renderRoom(room) {
 		var result = document.createElementNS("http://www.w3.org/2000/svg", "path");
 		result.classList.add("room");
-		result.setAttribute("d", room.toString(scale));
+		result.setAttribute("d", room.toString());
+		room.svg = result;
 		return result;
 	}
 }

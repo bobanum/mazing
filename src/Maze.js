@@ -40,11 +40,22 @@ export default class Maze {
 		}
 		return this.cellSize.height || this.cellSize.y;
 	}
-	
+	appendCorners(...corners) {
+		corners = corners.filter(corner => !this.corners.includes(corner));
+		this.corners.push(...corners);
+	}
+	appendWalls(...walls) {
+		walls = walls.filter(wall => !this.walls.includes(wall));
+		this.walls.push(...walls);
+	}
+	appendRooms(...rooms) {
+		rooms = rooms.filter(room => !this.rooms.includes(room));
+		this.rooms.push(...rooms);
+	}
 	createRooms() {
 		this.addCorners();
 		this.addWalls();
-		this.addRooms();
+		// this.addRooms();
 	}
 	addCorners() {
 		for (let r = 0; r < this.height; r++) {

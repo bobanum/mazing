@@ -102,11 +102,10 @@ nav ul li a:hover {
 
 .wall {
   stroke-width: 2;
-  stroke: rgba(0, 255, 255, 0.2);
+  stroke: rgba(0, 0, 0, 0.4);
 }
 
 .room {
-  fill: rgba(255, 0, 0, 0.2);
+  fill: rgba(255, 0, 0, 0.4);
   stroke-width: 1;
-  stroke: #ff0;
 }

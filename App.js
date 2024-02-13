@@ -7,9 +7,9 @@ export default class App {
 	static main() {
 		var app = document.getElementById("app");
 		Maze.rendererClass = "SVGFlat";
-		var maze = new Maze(4, 11);
+		var maze = new Maze(4, 5);
 		maze.createRooms();
-		maze.render(40).then(svg => {
+		maze.render().then(svg => {
 			app.appendChild(svg);
 		});
 	}
