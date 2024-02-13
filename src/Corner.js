@@ -18,4 +18,12 @@ export default class Corner extends Point {
 	wallConnected(corner) {
 		return this.walls.find(wall => wall.start === corner || wall.end === corner);
 	}
+	appendWalls(...walls) {
+		walls = walls.filter(wall => !this.walls.includes(wall));
+		this.walls.push(...walls);
+	}
+	appendRooms(...rooms) {
+		rooms = rooms.filter(room => !this.rooms.includes(room));
+		this.rooms.push(...rooms);
+	}
 }

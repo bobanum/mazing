@@ -14,29 +14,18 @@ export default class SVGFlat extends Renderer {
 		rect.setAttribute("height", (maze.height+1/3) * maze.cellSize);
 		rect.setAttribute("fill", "#FF0");
 
-		var corners = result.appendChild(document.createElementNS("http://www.w3.org/2000/svg", "g"));
-		corners.classList.add("corners");
-		maze.corners.forEach(corner => {
-			corners.appendChild(this.renderCorner(corner));
+		result.appendChild(this.renderRooms(maze.rooms));
+		result.appendChild(this.renderWalls(maze.walls));
+		result.appendChild(this.renderCorners(maze.corners));
+		
+		return result;
+	}
+	renderCorners(corners) {
+		var result = document.createElementNS("http://www.w3.org/2000/svg", "g");
+		result.classList.add("corners");
+		corners.forEach(corner => {
+			result.appendChild(this.renderCorner(corner));
 		});
-		// var walls = result.appendChild(document.createElementNS("http://www.w3.org/2000/svg", "g"));
-		// walls.classList.add("walls");
-		// maze.walls.forEach(wall => {
-		// 	walls.appendChild(this.renderWall(wall));
-		// });
-		var rooms = result.appendChild(document.createElementNS("http://www.w3.org/2000/svg", "g"));
-		rooms.classList.add("rooms");
-		maze.rooms.forEach(room => {
-			rooms.appendChild(this.renderRoom(room));
-		});
-		// maze.walls.forEach(wall => {
-		// 	walls.appendChild(wall.render(maze.cellSize));
-		// });
-		// var rooms = result.appendChild(document.createElementNS("http://www.w3.org/2000/svg", "g"));
-		// rooms.style.fill = "#0f08";
-		// maze.rooms.slice(11, 19).forEach(room => {
-		// 	rooms.appendChild(room.render(maze.cellSize));
-		// });
 		return result;
 	}
 	renderCorner(corner) {
@@ -46,6 +35,15 @@ export default class SVGFlat extends Renderer {
 		result.setAttribute("cy", corner.y);
 		result.setAttribute("r", 1);
 		corner.svg = result;
+		result.obj = corner;
+		return result;
+	}
+	renderWalls(walls) {
+		var result = document.createElementNS("http://www.w3.org/2000/svg", "g");
+		result.classList.add("walls");
+		walls.forEach(wall => {
+			result.appendChild(this.renderWall(wall));
+		});
 		return result;
 	}
 	renderWall(wall) {
@@ -53,6 +51,15 @@ export default class SVGFlat extends Renderer {
 		result.classList.add("wall");
 		result.setAttribute("d", wall.toString());
 		wall.svg = result;
+		result.obj = wall;
+		return result;
+	}
+	renderRooms(rooms) {
+		var result = document.createElementNS("http://www.w3.org/2000/svg", "g");
+		result.classList.add("rooms");
+		rooms.forEach(room => {
+			result.appendChild(this.renderRoom(room));
+		});
 		return result;
 	}
 	renderRoom(room) {
@@ -60,6 +67,7 @@ export default class SVGFlat extends Renderer {
 		result.classList.add("room");
 		result.setAttribute("d", room.toString());
 		room.svg = result;
+		result.obj = room;
 		return result;
 	}
 }

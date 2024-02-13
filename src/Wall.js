@@ -18,12 +18,14 @@ export default class Wall extends Edge {
 	}
 	static fromCorners(start, end, room = null) {
 		var wall;
+		start.appendRooms(room);
+		end.appendRooms(room);
 		if (wall = start.wallTo(end)) {
-			wall.rooms[0] = room;
+			wall.rooms[1] = room;
 			return wall;
 		}
 		if (wall = end.wallTo(start)) {
-			wall.rooms[1] = room;
+			wall.rooms[0] = room;
 			return wall;
 		}
 		wall = new this(start, end);

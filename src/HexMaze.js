@@ -49,8 +49,6 @@ export default class HexMaze extends Maze {
 				let roomL = this.getRoom(r, c - 1);
 				let roomTL = this.getRoom(r - 1, c + r % 2 - 1);
 				let roomTR = this.getRoom(r - 1, c + r % 2);
-				console.log(this.getRoom2(1, 0));
-				console.log(r, c, c + r % 2, roomL, roomTL, roomTR);
 				let corners = [
 					roomTL?.corners[2] || roomTR?.corners[4] || this.createRoomCorner(r, c, 0),
 					roomTR?.corners[3] || this.createRoomCorner(r, c, 1),
@@ -90,33 +88,8 @@ export default class HexMaze extends Maze {
 		}
 		return this;
 	}
-	addWalls0() {
-		for (let r = 0; r < this.height; r++) {
-			if (r % 2 === 1) {
-				this.addWall(...this.getCorner(r - 1, 0, [4, 3]));
-			}
-			for (let c = 0; c < this.width; c++) {
-				this.addWall(...this.getCorner(r, c, [5, 0, 1]));
-			}
-			if (r > 0 && r % 2 === 0) {
-				this.addWall(...this.getCorner(r - 1, this.width - 1, [3, 2]));
-			}
-			for (let c = 0; c <= this.width; c++) {
-				this.addWall(...this.getCorner(r, c, [4, 5]));
-			}
-		}
-		let r = this.height - 1;
-		for (let c = 0; c < this.width; c++) {
-			this.addWall(...this.getCorner(r, c, [4, 3, 2]));
-		}
-	}
 	getRoom(r, c) {
 		if (r < 0 || r >= this.height || c < 0 || c >= this.width) return null;
-		return this.rooms[r * this.width + c];
-	}
-	getRoom2(r, c) {
-		if (r < 0 || r >= this.height || c < 0 || c >= this.width) return null;
-		console.log(r * this.width + c);
 		return this.rooms[r * this.width + c];
 	}
 	getCorner(r, c, a = 0) {
