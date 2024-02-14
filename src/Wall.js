@@ -1,6 +1,7 @@
 import Edge from "./Edge.js";
 
 export default class Wall extends Edge {
+	_open = 0;
 	constructor(start, end) {
 		super(start, end);
 		this.start = start;
@@ -8,7 +9,7 @@ export default class Wall extends Edge {
 		start.walls.push(this);
 		end.walls.unshift(this);
 		this.rooms = [];
-		this.open = false;
+		this._open = 0;	// 0:close, 1:open room 0 to room 1, 2:open room 1 to room 2, 3: closed
 	}
 	get corners() {
 		return [this.start, this.end];
@@ -31,5 +32,14 @@ export default class Wall extends Edge {
 		wall = new this(start, end);
 		wall.rooms[1] = room;
 		return wall;
+	}
+	get open() {
+		return this._open;
+	}
+	set open(value) {
+		this._open = value & 3;
+		console.log(this);
+		this.svg.classList.toggle("open", value !== 0);
+		return this;
 	}
 }

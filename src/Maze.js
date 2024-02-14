@@ -52,56 +52,18 @@ export default class Maze {
 		rooms = rooms.filter(room => !this.rooms.includes(room));
 		this.rooms.push(...rooms);
 	}
-	createRooms() {
-		this.addCorners();
-		this.addWalls();
-		// this.addRooms();
+	
+	addRoom(...corners) {
+		var room = Room.fromCorners(...corners);
+		this.appendRooms(room);
+		this.appendWalls(...room.walls);
+		this.appendCorners(...room.corners);
+		return room;
 	}
-	addCorners() {
-		for (let r = 0; r < this.height; r++) {
-			for (let c = 0; c < this.width; c++) {
-				this.corners.push(new Corner(c, r));
-			}
-		}
-	}
-	addWalls() {
-		for (let r = 0; r < this.height; r++) {
-			for (let c = 1; c < this.width; c++) {
-				this.walls.push(new Wall(this.getCorner(r, c-1), this.getCorner(r, c)));
-			}
-		}
-
-		for (let r = 1; r < this.height; r++) {
-			for (let c = 0; c < this.width; c++) {
-				this.walls.push(new Wall(this.getCorner(r-1, c), this.getCorner(r, c)));
-			}
-		}
-	}
-	addWall(...corners) {
-		for (let i = 1; i < corners.length; i++) {
-			this.walls.push(new Wall(corners[i-1], corners[i]));
-		}
-		return this;
-	}
-	addRooms() {
-		for (let r = 1; r < this.height; r++) {
-			for (let c = 1; c < this.width; c++) {
-				this.rooms.push(Room.fromCorners([
-					this.getCorner(r-1, c-1), 
-					this.getCorner(r-1, c),
-					this.getCorner(r, c), 
-					this.getCorner(r, c-1)
-				]));
-			}
-		}
-	}
-	getCorner(row, col) {
-		return this.corners[row * this.width + col];
-	}
+	
 	async render(scale = 10) {
 		await Promise.resolve(this.constructor.rendererClass);
 		const renderer = new this.constructor.rendererClass(this, scale);
-		// debugger;
 		var result = renderer.render();
 		return result;
 	}

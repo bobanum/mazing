@@ -1,6 +1,7 @@
 import Cell from './Cell.js';
 import Wall from './Wall.js';
 export default class Room extends Cell {
+	_visited = false;
 	constructor(walls = []) {
 		super();
 		this.walls = walls;
@@ -21,6 +22,17 @@ export default class Room extends Cell {
 		}
 		result.corners = corners;
 		return result;
+	}
+	getAjoining(room) {
+		return this.walls.find(wall => wall.rooms.includes(room));
+	}
+	get visited() {
+		return this._visited;
+	}
+	set visited(value) {
+		this._visited = value;
+		this.svg.classList.toggle("visited", value);
+		return this;
 	}
 	
 }

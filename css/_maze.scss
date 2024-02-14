@@ -1,13 +1,20 @@
 .corner {
-	fill-opacity: .5;
+	fill-opacity: 1;
 
 }
 .wall {
 	stroke-width: 2;
-	stroke: #0006;
+	stroke: #000f;
+	&.open {
+		stroke: #f000;
+	}
 }
 .room {
 	fill: #f006;
 	stroke-width: 1;
 	// stroke: #ff0;
+	&.visited {
+		fill: #0f00;
+
+	}
 }

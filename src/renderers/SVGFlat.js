@@ -15,6 +15,7 @@ export default class SVGFlat extends Renderer {
 		rect.setAttribute("fill", "#FF0");
 
 		result.appendChild(this.renderRooms(maze.rooms));
+		console.log(maze.walls);
 		result.appendChild(this.renderWalls(maze.walls));
 		result.appendChild(this.renderCorners(maze.corners));
 		
