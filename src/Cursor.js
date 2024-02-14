@@ -6,23 +6,23 @@ export default class Cursor {
 	}
 	run() {
 		while (this.path.length > 0) {
-			var room = this.path[this.path.length - 1];
-			const walls = [...room.walls].filter(wall => wall.open === 0);
+			var cell = this.path[this.path.length - 1];
+			const walls = [...cell.walls].filter(wall => wall.open === 0);
 			const neighbors = walls.reduce((acc, wall) => {
-				acc.push(...wall.rooms.filter(oneRoom => oneRoom !== undefined && oneRoom !== room && !oneRoom.visited));
+				acc.push(...wall.cells.filter(oneCell => oneCell !== undefined && oneCell !== cell && !oneCell.visited));
 				return acc;
 			}, []).shuffle();
 			if (neighbors.length === 0) {
 				this.path.pop();
 				continue;
 			}
-			var newRoom = neighbors[0];
-			this.path.push(newRoom);
-			newRoom.visited = true;
-			const ajoining = room.getAjoining(newRoom);
+			var newCell = neighbors[0];
+			this.path.push(newCell);
+			newCell.visited = true;
+			const ajoining = cell.getAjoining(newCell);
 			ajoining.open = 3;
 			ajoining.svg.classList.add("open");
-			newRoom.svg.classList.add("current");
+			newCell.svg.classList.add("current");
 		}
 	}
 }

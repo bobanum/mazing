@@ -22,7 +22,7 @@ export default class Corner extends Point {
 		walls = walls.filter(wall => !this.walls.includes(wall));
 		this.walls.push(...walls);
 	}
-	appendRooms(...rooms) {
+	appendCells(...rooms) {
 		rooms = rooms.filter(room => !this.rooms.includes(room));
 		this.rooms.push(...rooms);
 	}

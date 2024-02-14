@@ -111,10 +111,10 @@ nav ul li a:hover {
   stroke: rgba(255, 0, 0, 0);
 }
 
-.room {
+.cell {
   fill: rgba(255, 0, 0, 0.4);
   stroke-width: 1;
 }
-.room.visited {
+.cell.visited {
   fill: rgba(0, 255, 0, 0);
 }

@@ -1,4 +1,4 @@
-import Room from "./Room.js";
+import Cell from "./Cell.js";
 import Corner from "./Corner.js";
 import Wall from "./Wall.js";
 
@@ -10,7 +10,7 @@ export default class Maze {
 		this.cellSize = cellSize;
 		this.corners = [];
 		this.walls = [];
-		this.rooms = [];
+		this.cells = [];
 		this.start = null;
 		this.end = null;
 		if (this.constructor.rendererClass) {
@@ -48,17 +48,17 @@ export default class Maze {
 		walls = walls.filter(wall => !this.walls.includes(wall));
 		this.walls.push(...walls);
 	}
-	appendRooms(...rooms) {
-		rooms = rooms.filter(room => !this.rooms.includes(room));
-		this.rooms.push(...rooms);
+	appendCells(...cells) {
+		cells = cells.filter(cell => !this.cells.includes(cell));
+		this.cells.push(...cells);
 	}
 
-	addRoom(...corners) {
-		var room = Room.fromCorners(...corners);
-		this.appendRooms(room);
-		this.appendWalls(...room.walls);
-		this.appendCorners(...room.corners);
-		return room;
+	addCell(...corners) {
+		var cell = Cell.fromCorners(...corners);
+		this.appendCells(cell);
+		this.appendWalls(...cell.walls);
+		this.appendCorners(...cell.corners);
+		return cell;
 	}
 
 	async render(scale = 10) {

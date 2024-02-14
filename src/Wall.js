@@ -8,8 +8,8 @@ export default class Wall extends Edge {
 		this.end = end;
 		start.walls.push(this);
 		end.walls.unshift(this);
-		this.rooms = [];
-		this._open = 0;	// 0:close, 1:open room 0 to room 1, 2:open room 1 to room 2, 3: closed
+		this.cells = [];
+		this._open = 0;	// 0:close, 1:open cell 0 to cell 1, 2:open cell 1 to cell 2, 3: closed
 	}
 	get corners() {
 		return [this.start, this.end];
@@ -17,20 +17,20 @@ export default class Wall extends Edge {
 	toString(scale = 1) {
 		return `M ${this.start.toString(scale)} ${this.end.toString(scale)}`;
 	}
-	static fromCorners(start, end, room = null) {
+	static fromCorners(start, end, cell = null) {
 		var wall;
-		start.appendRooms(room);
-		end.appendRooms(room);
+		start.appendCells(cell);
+		end.appendCells(cell);
 		if (wall = start.wallTo(end)) {
-			wall.rooms[1] = room;
+			wall.cells[1] = cell;
 			return wall;
 		}
 		if (wall = end.wallTo(start)) {
-			wall.rooms[0] = room;
+			wall.cells[0] = cell;
 			return wall;
 		}
 		wall = new this(start, end);
-		wall.rooms[1] = room;
+		wall.cells[1] = cell;
 		return wall;
 	}
 	getOpposite(corner) {

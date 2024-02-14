@@ -1,6 +1,6 @@
 import CornerBase from "./Corner.js";
 import Maze from "./Maze.js";
-import RoomBase from "./Room.js";
+import CellBase from "./Cell.js";
 import WallBase from "./Wall.js";
 
 export default class HexMaze extends Maze {
@@ -29,42 +29,42 @@ export default class HexMaze extends Maze {
 		var result = Corner.getCoords(r, c, a);
 		return [result[0] * this.cellWidth, result[1] * this.cellHeight];
 	}
-	createRoomCorner(r, c, a) {
+	createCellCorner(r, c, a) {
 		if (a instanceof Array) {
-			return a.map(a => this.createRoomCorner(r, c, a));
+			return a.map(a => this.createCellCorner(r, c, a));
 		}
 		var result = this.getCornerCoords(r, c, a);
 		result = new Corner(...result);
 		return result;
 	}
-	createRooms() {
+	createCells() {
 		for (let r = 0; r < this.height; r++) {
 			for (let c = 0; c < this.width; c++) {
-				let roomL = this.getRoom(r, c - 1);
-				let roomTL = this.getRoom(r - 1, c + r % 2 - 1);
-				let roomTR = this.getRoom(r - 1, c + r % 2);
+				let cellL = this.getCell(r, c - 1);
+				let cellTL = this.getCell(r - 1, c + r % 2 - 1);
+				let cellTR = this.getCell(r - 1, c + r % 2);
 				let corners = [
-					roomTL?.corners[2] || roomTR?.corners[4] || this.createRoomCorner(r, c, 0),
-					roomTR?.corners[3] || this.createRoomCorner(r, c, 1),
-					...this.createRoomCorner(r, c, [2, 3]),
-					roomL?.corners[2] || this.createRoomCorner(r, c, 4),
-					roomL?.corners[1] || roomTL?.corners[3] || this.createRoomCorner(r, c, 5),
+					cellTL?.corners[2] || cellTR?.corners[4] || this.createCellCorner(r, c, 0),
+					cellTR?.corners[3] || this.createCellCorner(r, c, 1),
+					...this.createCellCorner(r, c, [2, 3]),
+					cellL?.corners[2] || this.createCellCorner(r, c, 4),
+					cellL?.corners[1] || cellTL?.corners[3] || this.createCellCorner(r, c, 5),
 				];
-				this.addRoom(...corners);
+				this.addCell(...corners);
 			}
 		}
 		return this;
 	}
-	addRoom(...corners) {
-		var room = Room.fromCorners(...corners);
-		this.appendRooms(room);
-		this.appendWalls(...room.walls);
-		this.appendCorners(...room.corners);
-		return room;
+	addCell(...corners) {
+		var cell = Cell.fromCorners(...corners);
+		this.appendCells(cell);
+		this.appendWalls(...cell.walls);
+		this.appendCorners(...cell.corners);
+		return cell;
 	}
-	getRoom(r, c) {
+	getCell(r, c) {
 		if (r < 0 || r >= this.height || c < 0 || c >= this.width) return null;
-		return this.rooms[r * this.width + c];
+		return this.cells[r * this.width + c];
 	}
 	get cellWidth() {
 		return Math.sqrt(3 / 2) * this.cellHeight;
@@ -94,7 +94,7 @@ class Corner extends CornerBase {
 }
 class Wall extends WallBase {
 }
-class Room extends RoomBase {
+class Cell extends CellBase {
 	// Usless for now
 	getCornerCoords(r, c, a) {
 		if (a instanceof Array) {

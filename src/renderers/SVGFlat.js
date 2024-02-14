@@ -10,11 +10,11 @@ export default class SVGFlat extends Renderer {
 		var rect = result.appendChild(document.createElementNS("http://www.w3.org/2000/svg", "rect"));
 		rect.setAttribute("x", 0);
 		rect.setAttribute("y", 0);
-		rect.setAttribute("width", 3 * maze.cellWidth);
+		rect.setAttribute("width", maze.width * maze.cellWidth + (maze.height > 1 ? maze.cellSize*.5 : 0));
 		rect.setAttribute("height", (maze.height+1/3) * maze.cellSize);
 		rect.setAttribute("fill", "#FF0");
 
-		result.appendChild(this.renderRooms(maze.rooms));
+		result.appendChild(this.renderCells(maze.cells));
 		result.appendChild(this.renderWalls(maze.walls));
 		result.appendChild(this.renderCorners(maze.corners));
 		
@@ -54,20 +54,20 @@ export default class SVGFlat extends Renderer {
 		result.obj = wall;
 		return result;
 	}
-	renderRooms(rooms) {
+	renderCells(cells) {
 		var result = document.createElementNS("http://www.w3.org/2000/svg", "g");
-		result.classList.add("rooms");
-		rooms.forEach(room => {
-			result.appendChild(this.renderRoom(room));
+		result.classList.add("cells");
+		cells.forEach(cell => {
+			result.appendChild(this.renderCell(cell));
 		});
 		return result;
 	}
-	renderRoom(room) {
+	renderCell(cell) {
 		var result = document.createElementNS("http://www.w3.org/2000/svg", "path");
-		result.classList.add("room");
-		result.setAttribute("d", room.toString());
-		room.svg = result;
-		result.obj = room;
+		result.classList.add("cell");
+		result.setAttribute("d", cell.toString());
+		cell.svg = result;
+		result.obj = cell;
 		return result;
 	}
 }
