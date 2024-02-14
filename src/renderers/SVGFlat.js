@@ -4,7 +4,7 @@ export default class SVGFlat extends Renderer {
 	render() {
 		const maze = this.maze;
 		var result = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-		result.setAttribute("viewBox", `${-maze.cellSize} ${-maze.cellSize} ${2*(maze.width + 1) * maze.cellSize} ${(1.5*(maze.height)+.5+4) * maze.cellSize}`);
+		result.setAttribute("viewBox", `${-maze.cellSize} ${-maze.cellSize} ${(maze.width + 2) * maze.cellWidth} ${((maze.height)+2) * maze.cellHeight}`);
 		// result.setAttribute("width", maze.width * this.scale);
 		// result.setAttribute("height", maze.height * this.scale);
 		var rect = result.appendChild(document.createElementNS("http://www.w3.org/2000/svg", "rect"));
@@ -15,7 +15,6 @@ export default class SVGFlat extends Renderer {
 		rect.setAttribute("fill", "#FF0");
 
 		result.appendChild(this.renderRooms(maze.rooms));
-		console.log(maze.walls);
 		result.appendChild(this.renderWalls(maze.walls));
 		result.appendChild(this.renderCorners(maze.corners));
 		

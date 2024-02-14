@@ -1,6 +1,10 @@
 .corner {
 	fill-opacity: 1;
-
+	&.dead-end {
+		fill: #fff0;
+		// stroke-width: 2;
+		// stroke: #f00;
+	}
 }
 .wall {
 	stroke-width: 2;
@@ -8,6 +12,9 @@
 	&.open {
 		stroke: #f000;
 	}
+	// &.dead-end {
+	// 	stroke: #0f0f;
+	// }
 }
 .room {
 	fill: #f006;

@@ -33,12 +33,17 @@ export default class Wall extends Edge {
 		wall.rooms[1] = room;
 		return wall;
 	}
+	getOpposite(corner) {
+		if (!this.corners.includes(corner)) {
+			return null;
+		}
+		return this.corners.find(oneCorner => oneCorner !== corner);
+	}
 	get open() {
 		return this._open;
 	}
 	set open(value) {
 		this._open = value & 3;
-		console.log(this);
 		this.svg.classList.toggle("open", value !== 0);
 		return this;
 	}

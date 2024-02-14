@@ -26,4 +26,10 @@ export default class Corner extends Point {
 		rooms = rooms.filter(room => !this.rooms.includes(room));
 		this.rooms.push(...rooms);
 	}
+	get openWalls() {
+		return this.walls.filter(wall => wall.open !== 0);
+	}
+	get closedWalls() {
+		return this.walls.filter(wall => wall.open === 0);
+	}
 }

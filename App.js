@@ -1,5 +1,5 @@
-import SquareMaze from "./src/SquareMaze.js";
-import HexMaze from "./src/HexMaze.js";
+// import Maze from "./src/SquareMaze.js";
+import Maze from "./src/HexMaze.js";
 import Cursor from "./src/Cursor.js";
 
 Object.defineProperty(Array.prototype, "shuffle", {
@@ -18,14 +18,32 @@ export default class App {
 	 */
 	static main() {
 		var app = document.getElementById("app");
-		HexMaze.rendererClass = "SVGFlat";
-		var maze = new HexMaze(15, 15);
+		Maze.rendererClass = "SVGFlat";
+		var maze = new Maze(15, 15);
 		maze.createRooms();
 		maze.render().then(svg => {
 			app.appendChild(svg);
 			var room = maze.getRoom(0,0);
 			var cursor = new Cursor(maze, room);
 			cursor.run();
+			// console.log(maze.corners);
+			// maze.decimate(.9, 3);
+			// var deadEnds = maze.corners.filter(corner => corner.walls.filter(wall => wall.open === 0).length === 1).shuffle();
+			// deadEnds.slice(0, 1000).forEach(deadEnd => {
+			// 	deadEnd.svg.classList.add("dead-end");
+			// 	let wall = deadEnd.walls.find(wall => wall.open === 0);
+			// 	wall.open = 3;
+			// 	wall.svg.classList.add("dead-end");
+			// 	console.log(wall);
+			// });
+			// var deadEnds = maze.corners.filter(corner => corner.walls.filter(wall => wall.open === 0).length === 1).shuffle();
+			// deadEnds.slice(0, 1000).forEach(deadEnd => {
+			// 	deadEnd.svg.classList.add("dead-end");
+			// 	let wall = deadEnd.walls.find(wall => wall.open === 0);
+			// 	wall.open = 3;
+			// 	wall.svg.classList.add("dead-end");
+			// 	console.log(wall);
+			// });
 		});
 		// HexMaze.rendererClass = "SVGFlat";
 		// var maze = new HexMaze(4, 5);
