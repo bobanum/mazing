@@ -5,6 +5,7 @@ import Wall from "./Wall.js";
 export default class Maze {
 	static rendererClass = null;
 	constructor(width, height, cellSize = 10) {
+		this.allowTunnels = false;
 		this.width = width;
 		this.height = height;
 		this.cellSize = cellSize;
@@ -67,19 +68,22 @@ export default class Maze {
 		var result = renderer.render();
 		return result;
 	}
+	findDeadEnds() {
+		return this.cells.filter(cell => cell.isDeadEnd);
+	}
 	decimate(ratio = .5, depth = 2) {
-		var deadEnds = this.corners.filter(corner => corner.closedWalls.length === 1).shuffle();
-		deadEnds = deadEnds.slice(0, deadEnds.length * ratio);
-		deadEnds.forEach(deadEnd => {
+		var wallEnds = this.corners.filter(corner => corner.closedWalls.length === 1).shuffle();
+		wallEnds = wallEnds.slice(0, wallEnds.length * ratio);
+		wallEnds.forEach(wallEnd => {
 			for (let i = 0; i < depth; i++) {
-				deadEnd.svg.classList.add("dead-end");
-				let wall = deadEnd.walls.find(wall => wall.open === 0);
+				wallEnd.svg.classList.add("wall-end");
+				let wall = wallEnd.walls.find(wall => wall.open === 0);
 				wall.open = 3;
-				wall.svg.classList.add("dead-end");
-				let opposite = wall.getOpposite(deadEnd);
+				wall.svg.classList.add("wall-end");
+				let opposite = wall.getOpposite(wallEnd);
 				let oppositeWalls = opposite.closedWalls;
 				if (oppositeWalls.length > 1) break;
-				deadEnd = opposite;
+				wallEnd = opposite;
 			}
 		});
 	}

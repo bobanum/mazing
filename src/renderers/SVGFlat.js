@@ -12,12 +12,13 @@ export default class SVGFlat extends Renderer {
 		rect.setAttribute("y", 0);
 		rect.setAttribute("width", maze.width * maze.cellWidth + (maze.height > 1 ? maze.cellSize*.5 : 0));
 		rect.setAttribute("height", (maze.height+1/3) * maze.cellSize);
-		rect.setAttribute("fill", "#FF0");
+		rect.setAttribute("fill", "#FF00");
 
 		result.appendChild(this.renderCells(maze.cells));
 		result.appendChild(this.renderWalls(maze.walls));
 		result.appendChild(this.renderCorners(maze.corners));
-		
+		result.obj = maze;
+		maze.svg = result;
 		return result;
 	}
 	renderCorners(corners) {

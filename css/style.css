@@ -98,23 +98,38 @@ nav ul li a:hover {
 
 .corner {
   fill-opacity: 1;
+  stroke: black;
+  stroke-width: 0;
 }
-.corner.dead-end {
+.corner.wall-end {
   fill: rgba(255, 255, 255, 0);
 }
 
 .wall {
   stroke-width: 2;
-  stroke: black;
+  stroke: #000;
 }
 .wall.open {
   stroke: rgba(255, 0, 0, 0);
 }
+.wall.tunnel {
+  stroke-width: 3;
+  stroke-opacity: 0.9;
+}
 
 .cell {
-  fill: rgba(255, 0, 0, 0.4);
+  fill: #000;
   stroke-width: 1;
 }
 .cell.visited {
   fill: rgba(0, 255, 0, 0);
+}
+.cell.corridor {
+  fill: rgba(255, 0, 255, 0.5333333333);
+}
+.cell.dead-end {
+  fill: rgba(255, 0, 0, 0.2);
+}
+.cell.intersection {
+  fill: #ff0;
 }

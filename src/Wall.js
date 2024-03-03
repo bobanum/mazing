@@ -33,6 +33,10 @@ export default class Wall extends Edge {
 		wall.cells[1] = cell;
 		return wall;
 	}
+	getAjoiningTo(cell) {
+		return this.cells.find(oneCell => oneCell !== cell);
+	}
+
 	getOpposite(corner) {
 		if (!this.corners.includes(corner)) {
 			return null;

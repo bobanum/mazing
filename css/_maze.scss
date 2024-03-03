@@ -1,6 +1,8 @@
 .corner {
 	fill-opacity: 1;
-	&.dead-end {
+	stroke: black;
+	stroke-width: 0;
+	&.wall-end {
 		fill: #fff0;
 		// stroke-width: 2;
 		// stroke: #f00;
@@ -8,20 +10,33 @@
 }
 .wall {
 	stroke-width: 2;
-	stroke: #000f;
+	stroke: #000;
 	&.open {
 		stroke: #f000;
 	}
-	// &.dead-end {
+	&.tunnel {
+		stroke-width: 3;
+		stroke-opacity: .9;
+	}
+	// &.wall-end {
 	// 	stroke: #0f0f;
 	// }
 }
 .cell {
-	fill: #f006;
+	fill: #000;
 	stroke-width: 1;
 	// stroke: #ff0;
 	&.visited {
 		fill: #0f00;
-
+		
+	}
+	&.corridor {
+		fill: #f0f8;
+	}
+	&.dead-end {
+		fill: #f003;
+	}
+	&.intersection {
+		fill: #ff0;
 	}
 }
