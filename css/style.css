@@ -117,10 +117,6 @@ nav ul li a:hover {
 .wall.open {
   stroke: rgba(255, 0, 0, 0);
 }
-.wall.tunnel {
-  stroke-width: 3;
-  stroke-opacity: 0.9;
-}
 
 .cell {
   fill: #000;

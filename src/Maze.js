@@ -6,7 +6,6 @@ import Wall from "./Wall.js";
 export default class Maze {
 	static rendererClass = null;
 	constructor(width, height, cellSize = 10) {
-		this.allowTunnels = false;
 		this.width = width;
 		this.height = height;
 		this.cellSize = cellSize;
@@ -17,17 +16,6 @@ export default class Maze {
 		this.end = null;
 		this.renderers = {};
 		this.addRenderer(this.constructor.rendererClass);
-		// if (this.constructor.rendererClass) {
-		// 	if (typeof this.constructor.rendererClass === "string") {
-		// 		this.constructor.rendererClass = import(`./renderers/${this.constructor.rendererClass}.js`).then(module => {
-		// 			return this.constructor.rendererClass = module.default;
-		// 		});
-		// 	} else if (Array.isArray(this.constructor.rendererClass)) {
-		// 		this.constructor.rendererClass = Promise.all(this.constructor.rendererClass.map(rendererClass => {
-		// 			return import(`./renderers/${rendererClass}.js`).then(module => module.default);
-		// 		}));
-		// 	}
-		// }
 	}
 	addRenderer(rendererClass) {
 		if (!rendererClass) return;
@@ -110,40 +98,8 @@ export default class Maze {
 			result[rendererName] = renderer.render();
 		}
 		return result;
-		// return Object.values(this.renderers).map(renderer => {
-		// 	console.log(renderer);
-		// });
-		// if (Array.isArray(this.constructor.rendererClass)) {
-		// 	const rendererClass = await Promise.all(this.constructor.rendererClass);
-		// 	return rendererClass.map(Renderer => new Renderer(this, scale).render());
-		// } else {
-		// 	const rendererClass = await Promise.resolve(this.constructor.rendererClass);
-		// 	debugger;
-		// 	const renderer = new rendererClass(this, scale);
-		// 	var result = renderer.render();
-		// 	return result;
-		// }
 	}
 	getRenderer() {
 		return new this.constructor.rendererClass(this, scale);
-	}
-	findDeadEnds() {
-		return this.cells.filter(cell => cell.isDeadEnd);
-	}
-	decimate(ratio = .5, depth = 2) {
-		var wallEnds = this.corners.filter(corner => corner.closedWalls.length === 1).shuffle();
-		wallEnds = wallEnds.slice(0, wallEnds.length * ratio);
-		wallEnds.forEach(wallEnd => {
-			for (let i = 0; i < depth; i++) {
-				wallEnd.svg.classList.add("wall-end");
-				let wall = wallEnd.walls.find(wall => wall.open === 0);
-				wall.open = 3;
-				wall.svg.classList.add("wall-end");
-				let opposite = wall.getOpposite(wallEnd);
-				let oppositeWalls = opposite.closedWalls;
-				if (oppositeWalls.length > 1) break;
-				wallEnd = opposite;
-			}
-		});
 	}
 }

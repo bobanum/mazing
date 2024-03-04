@@ -18,13 +18,6 @@
 	&.open {
 		stroke: #f000;
 	}
-	&.tunnel {
-		stroke-width: 3;
-		stroke-opacity: .9;
-	}
-	// &.wall-end {
-	// 	stroke: #0f0f;
-	// }
 }
 .cell {
 	fill: #000;
