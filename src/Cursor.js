@@ -30,9 +30,6 @@ export default class Cursor {
 						between.getAjoining(unvisited).svg.classList.add("tunnel");
 						between.getAjoining(cell).svg.classList.add("tunnel");
 						console.log(between);
-						// 	oneCell.svg.classList.add("visited");
-						// });
-						// debugger;
 					}
 				}
 				var back = Math.max(1, Math.floor(this.path.length * .2));
@@ -45,8 +42,12 @@ export default class Cursor {
 			newCell.visited = true;
 			const ajoining = cell.getAjoining(newCell);
 			ajoining.open = 3;
-			ajoining.svg.classList.add("open");
-			newCell.svg.classList.add("current");
+			// if (ajoining.svg) {
+			// 	ajoining.svg.classList.add("open");
+			// }
+			// if (newCell.svg) {
+			// 	newCell.svg.classList.add("current");
+			// }
 		}
 	}
 }

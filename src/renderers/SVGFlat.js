@@ -4,6 +4,7 @@ export default class SVGFlat extends Renderer {
 	render() {
 		const maze = this.maze;
 		var result = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+		result.classList.add("maze");
 		result.setAttribute("viewBox", `${-maze.cellSize} ${-maze.cellSize} ${(maze.width + 2) * maze.cellWidth} ${((maze.height)+2) * maze.cellHeight}`);
 		// result.setAttribute("width", maze.width * this.scale);
 		// result.setAttribute("height", maze.height * this.scale);
@@ -51,6 +52,9 @@ export default class SVGFlat extends Renderer {
 		var result = document.createElementNS("http://www.w3.org/2000/svg", "path");
 		result.classList.add("wall");
 		result.setAttribute("d", wall.toString());
+		if (wall.open) {
+			result.classList.add("open");
+		}
 		wall.svg = result;
 		result.obj = wall;
 		return result;

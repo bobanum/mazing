@@ -1,5 +1,6 @@
 import Cell from "./Cell.js";
 import Corner from "./Corner.js";
+import Cursor from "./Cursor.js";
 import Wall from "./Wall.js";
 
 export default class Maze {
@@ -14,14 +15,48 @@ export default class Maze {
 		this.cells = [];
 		this.start = null;
 		this.end = null;
-		if (this.constructor.rendererClass) {
-			if (typeof this.constructor.rendererClass === "string") {
-				this.constructor.rendererClass = import(`./renderers/${this.constructor.rendererClass}.js`).then(module => {
-					this.constructor.rendererClass = module.default;
-				});
-			}
+		this.renderers = {};
+		this.addRenderer(this.constructor.rendererClass);
+		// if (this.constructor.rendererClass) {
+		// 	if (typeof this.constructor.rendererClass === "string") {
+		// 		this.constructor.rendererClass = import(`./renderers/${this.constructor.rendererClass}.js`).then(module => {
+		// 			return this.constructor.rendererClass = module.default;
+		// 		});
+		// 	} else if (Array.isArray(this.constructor.rendererClass)) {
+		// 		this.constructor.rendererClass = Promise.all(this.constructor.rendererClass.map(rendererClass => {
+		// 			return import(`./renderers/${rendererClass}.js`).then(module => module.default);
+		// 		}));
+		// 	}
+		// }
+	}
+	addRenderer(rendererClass) {
+		if (!rendererClass) return;
+		if (Array.isArray(rendererClass)) {
+			rendererClass.forEach(rendererClass => this.addRenderer(rendererClass));
+			return this;
+		}
+		if (typeof rendererClass === "string") {
+			this.renderers[rendererClass] = import(`./renderers/${rendererClass}.js`).then(module => {
+				return this.renderers[rendererClass] = new module.default(this);
+			});
+			return this;
 		}
 	}
+	getRenderer(rendererClass) {
+		return this.renderers[rendererClass];
+	}
+	toString() {
+		var result = "";
+		for (let r = 0; r < this.height; r++) {
+			for (let c = 0; c < this.width; c++) {
+				let cell = this.getCell(r, c);
+				result += cell.toString();
+			}
+			result += "\n";
+		}
+		return result;
+	}
+
 	get cellWidth() {
 		if (typeof this.cellSize === "number") {
 			return this.cellSize;
@@ -40,6 +75,12 @@ export default class Maze {
 			return this.cellSize[1];
 		}
 		return this.cellSize.height || this.cellSize.y;
+	}
+	generate() {
+		this.createCells();
+		var cell = this.getCell(Math.floor(this.height / 2), Math.floor(this.width / 2));
+		var cursor = new Cursor(this, cell);
+		cursor.run();
 	}
 	appendCorners(...corners) {
 		corners = corners.filter(corner => !this.corners.includes(corner));
@@ -63,10 +104,28 @@ export default class Maze {
 	}
 
 	async render(scale = 10) {
-		await Promise.resolve(this.constructor.rendererClass);
-		const renderer = new this.constructor.rendererClass(this, scale);
-		var result = renderer.render();
+		var result = {};
+		for (let rendererName in this.renderers) {
+			let renderer = await this.renderers[rendererName];
+			result[rendererName] = renderer.render();
+		}
 		return result;
+		// return Object.values(this.renderers).map(renderer => {
+		// 	console.log(renderer);
+		// });
+		// if (Array.isArray(this.constructor.rendererClass)) {
+		// 	const rendererClass = await Promise.all(this.constructor.rendererClass);
+		// 	return rendererClass.map(Renderer => new Renderer(this, scale).render());
+		// } else {
+		// 	const rendererClass = await Promise.resolve(this.constructor.rendererClass);
+		// 	debugger;
+		// 	const renderer = new rendererClass(this, scale);
+		// 	var result = renderer.render();
+		// 	return result;
+		// }
+	}
+	getRenderer() {
+		return new this.constructor.rendererClass(this, scale);
 	}
 	findDeadEnds() {
 		return this.cells.filter(cell => cell.isDeadEnd);

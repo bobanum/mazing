@@ -6,8 +6,8 @@ export default class Cell {
 		this.corners = walls.map(wall => wall.start);
 	}
 	toString(scale = 1) {
-		var vertices = this.corners.map(corner => corner.toString(scale)).join(" ");
-		return `M ${vertices} z`;
+		var result = this.walls.map(wall => wall.open);
+		return `[${result.join(",")}]`;
 	}
 	static fromCorners(...corners) {
 		var result = new this();
@@ -79,7 +79,6 @@ export default class Cell {
 	}
 	set visited(value) {
 		this._visited = value;
-		this.svg.classList.toggle("visited", value);
 		return this;
 	}
 	

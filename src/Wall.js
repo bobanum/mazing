@@ -48,7 +48,6 @@ export default class Wall extends Edge {
 	}
 	set open(value) {
 		this._open = value & 3;
-		this.svg.classList.toggle("open", value !== 0);
 		return this;
 	}
 }
