@@ -1,14 +1,12 @@
 import Cell from "./Cell.js";
-import Corner from "./Corner.js";
 import Cursor from "./Cursor.js";
-import Wall from "./Wall.js";
 
 export default class Maze {
 	static rendererClass = null;
 	constructor(width, height, cellSize = 10) {
 		this.width = width;
 		this.height = height;
-		this.cellSize = cellSize;
+		this.cellSize = [].concat(cellSize);
 		this.corners = [];
 		this.walls = [];
 		this.cells = [];
@@ -44,25 +42,17 @@ export default class Maze {
 		}
 		return result;
 	}
-
-	get cellWidth() {
-		if (typeof this.cellSize === "number") {
-			return this.cellSize;
-		}
-		if (Array.isArray(this.cellSize)) {
-			return this.cellSize[0];
-		}
-		return this.cellSize.width || this.cellSize.x;
+	getCellSize(dimension = 0) {
+		return this.cellSize[dimension % this.cellSize.length];
 	}
-
+	get cellWidth() {
+		return this.getCellSize(0);
+	}
 	get cellHeight() {
-		if (typeof this.cellSize === "number") {
-			return this.cellSize;
-		}
-		if (Array.isArray(this.cellSize)) {
-			return this.cellSize[1];
-		}
-		return this.cellSize.height || this.cellSize.y;
+		return this.getCellSize(1);
+	}
+	get cellDepth() {
+		return this.getCellSize(2);
 	}
 	generate() {
 		this.createCells();
@@ -75,7 +65,9 @@ export default class Maze {
 		this.corners.push(...corners);
 	}
 	appendWalls(...walls) {
-		walls = walls.filter(wall => !this.walls.includes(wall));
+		// console.log(walls.map(wall => wall+""));
+		walls = walls.filter(wall => (!this.walls.includes(wall)));
+		// console.log(walls.map(wall => wall+""));
 		this.walls.push(...walls);
 	}
 	appendCells(...cells) {
@@ -84,6 +76,7 @@ export default class Maze {
 	}
 
 	addCell(...corners) {
+		debugger;
 		var cell = Cell.fromCorners(...corners);
 		this.appendCells(cell);
 		this.appendWalls(...cell.walls);

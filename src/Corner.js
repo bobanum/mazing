@@ -19,8 +19,11 @@ export default class Corner extends Point {
 		return this.walls.find(wall => wall.start === corner || wall.end === corner);
 	}
 	appendWalls(...walls) {
-		walls = walls.filter(wall => !this.walls.includes(wall));
-		this.walls.push(...walls);
+		// console.log(walls.join("¤"));
+		// console.log(this.id, this.walls.join("¤"));
+		// walls = walls.filter(wall => !this.walls.includes(wall));
+		this.walls.appendNew(...walls);
+		// console.log(this.walls.join("¤"));
 	}
 	appendCells(...rooms) {
 		rooms = rooms.filter(room => !this.rooms.includes(room));

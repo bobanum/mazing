@@ -1,6 +1,14 @@
-import Maze from "./src/SquareMaze.js";
-// import Maze from "./src/HexMaze.js";
+import SquareMaze from "./src/SquareMaze.js";
+import Maze3D from "./src/Maze3D.js";
+import HexMaze from "./src/HexMaze.js";
 
+Object.defineProperty(Array.prototype, "appendNew", {
+	value: function (...array) {
+		array = array.filter(item => !this.includes(item));
+		this.push(...array);
+		return this;
+	}
+});
 Object.defineProperty(Array.prototype, "shuffle", {
 	value: function () {
 		for (let i = this.length - 1; i > 0; i--) {
@@ -27,14 +35,29 @@ export default class App {
 	 */
 	static main() {
 		var app = document.getElementById("app");
-		// Maze.rendererClass = "SVGFlat";
-		// Maze.rendererClass = "BitsRenderer";
-		Maze.rendererClass = ["BitsRenderer", "SVGFlat"];
-		var maze = new Maze(5, 5);
+
+		// SquareMaze.rendererClass = "SVGFlat";
+		// var maze = new SquareMaze(5, 5);
+		// maze.generate();
+		// maze.render().then(renders => {
+		// 	app.appendChild(renders.SVGFlat);
+		// });
+
+		// HexMaze.rendererClass = "SVGFlat";
+		// var maze = new HexMaze(5, 5);
+		// maze.generate();
+		// maze.render().then(renders => {
+		// 	console.log(renders);
+		// 	app.appendChild(renders.SVGFlat);
+		// });
+
+		Maze3D.rendererClass = "SVG3D";
+		var maze = new Maze3D(5, 5, 3);
 		maze.generate();
 		maze.render().then(renders => {
-			app.appendChild(renders.SVGFlat);
+			app.appendChild(renders.SVG3D);
 		});
+
 		return;
 	}
 }

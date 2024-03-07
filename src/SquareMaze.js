@@ -20,15 +20,18 @@ export default class SquareMaze extends Maze {
 		return result;
 	}
 	createCells() {
+		// 0----1
+		// |    |
+		// 3----2
 		for (let r = 0; r < this.height; r++) {
 			for (let c = 0; c < this.width; c++) {
 				let cellL = this.getCell(r, c - 1);
 				let cellT = this.getCell(r - 1, c);
 				let corners = [
-					cellT?.corners[3] || cellL?.corners[1] || this.createCellCorner(r, c, 0),
-					cellT?.corners[2] || this.createCellCorner(r, c, 1),
-					this.createCellCorner(r, c, 2),
-					cellL?.corners[2] || this.createCellCorner(r, c, 3),
+					/*0*/ cellT?.corners[3] || cellL?.corners[1] || this.createCellCorner(r, c, 0),
+					/*1*/ cellT?.corners[2] || this.createCellCorner(r, c, 1),
+					/*2*/ this.createCellCorner(r, c, 2),
+					/*3*/ cellL?.corners[2] || this.createCellCorner(r, c, 3),
 				];
 				this.addCell(...corners);
 			}

@@ -111,15 +111,16 @@ nav ul li a:hover {
 }
 
 .wall {
-  stroke-width: 2;
+  stroke-width: 0.3;
   stroke: #000;
+  stroke-opacity: 0.3;
+  fill: transparent;
 }
 .wall.open {
   stroke: rgba(255, 0, 0, 0);
 }
 
 .cell {
-  fill: #000;
   stroke-width: 1;
 }
 .cell.visited {

@@ -1,9 +1,9 @@
 import Wall from './Wall.js';
 export default class Cell {
-	_visited = false;
 	constructor(walls = []) {
 		this.walls = walls;
 		this.corners = walls.map(wall => wall.start);
+		this._visited = false;
 	}
 	toString(scale = 1) {
 		var result = this.walls.map(wall => wall.open);
@@ -14,7 +14,7 @@ export default class Cell {
 		for (let i = 0; i < corners.length; i++) {
 			let start = corners[i];
 			let end = corners[(i + 1) % corners.length];
-			let wall = Wall.fromCorners(start, end, result);
+			let wall = Wall.fromCorners([start, end], result);
 			result.walls.push(wall);
 		}
 		result.corners = corners;

@@ -13,14 +13,16 @@
 	}
 }
 .wall {
-	stroke-width: 2;
+	stroke-width: .3;
 	stroke: #000;
+	stroke-opacity: .3;
+	fill: transparent;
 	&.open {
 		stroke: #f000;
 	}
 }
 .cell {
-	fill: #000;
+	// fill: #000;
 	stroke-width: 1;
 	// stroke: #ff0;
 	&.visited {
