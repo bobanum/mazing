@@ -17,42 +17,39 @@ export default class Maze3D extends Maze {
 		for (let f = 0; f < this.depth; f++) {
 			for (let r = 0; r < this.height; r++) {
 				for (let c = 0; c < this.width; c++) {
-					let cellL = this.getCell(f, r, c - 1);
-					let cellT = this.getCell(f, r - 1, c);
-					let cellB = this.getCell(f - 1, r, c);
-					let frc = [f, r, c];
-					console.log(frc, frc.join("¦"));
+					let cellL = this.getCell(c - 1, r, f);
+					let cellT = this.getCell(c, r - 1, f);
+					let cellB = this.getCell(c, r, f - 1);
+					let crf = [c, r, f];
 					let corners = [
-						/*0*/ cellB?.corners[4] || cellT?.corners[3] || cellL?.corners[1] || this.createCellCorner(frc, 0),
-						/*1*/ cellB?.corners[5] || cellT?.corners[2] || this.createCellCorner(frc, 1),
-						/*2*/ cellB?.corners[6] || this.createCellCorner(frc, 2),
-						/*3*/ cellB?.corners[7] || cellL?.corners[2] || this.createCellCorner(frc, 3),
-						/*4*/ cellT?.corners[7] || cellL?.corners[5] || this.createCellCorner(frc, 4),
-						/*5*/ cellT?.corners[6] || this.createCellCorner(frc, 5),
-						/*6*/ this.createCellCorner(frc, 6),
-						/*7*/ cellL?.corners[6] || this.createCellCorner(frc, 7),
+						/*0*/ cellB?.corners[4] || cellT?.corners[3] || cellL?.corners[1] || this.createCellCorner(crf, 0),
+						/*1*/ cellB?.corners[5] || cellT?.corners[2] || this.createCellCorner(crf, 1),
+						/*2*/ cellB?.corners[6] || this.createCellCorner(crf, 2),
+						/*3*/ cellB?.corners[7] || cellL?.corners[2] || this.createCellCorner(crf, 3),
+						/*4*/ cellT?.corners[7] || cellL?.corners[5] || this.createCellCorner(crf, 4),
+						/*5*/ cellT?.corners[6] || this.createCellCorner(crf, 5),
+						/*6*/ this.createCellCorner(crf, 6),
+						/*7*/ cellL?.corners[6] || this.createCellCorner(crf, 7),
 					];
 					this.addCell(...corners);
-					// console.log(corners.join("¦"));
-					// console.log(corners[0]);
 				}
 			}
 		}
 		return this;
 	}
-	getCornerCoords(frc, a) {
+	getCornerCoords(crf, a) {
 		if (a instanceof Array) {
-			return a.map(a => this.getCornerCoords(frc, a));
+			return a.map(a => this.getCornerCoords(crf, a));
 		}
-		var result = Corner.getCoords(frc, a);
+		var result = Corner.getCoords(crf, a);
 		return [result[0] * this.cellWidth, result[1] * this.cellHeight, result[2] * this.cellDepth];
 	}
 
-	createCellCorner(frc, a) {
+	createCellCorner(crf, a) {
 		if (a instanceof Array) {
-			return a.map(a => this.createCellCorner(frc, a));
+			return a.map(a => this.createCellCorner(crf, a));
 		}
-		var result = this.getCornerCoords(frc, a);
+		var result = this.getCornerCoords(crf, a);
 		result = new Corner(...result);
 		return result;
 	}
@@ -63,7 +60,7 @@ export default class Maze3D extends Maze {
 		this.appendCorners(...cell.corners);
 		return cell;
 	}
-	getCell(f, r, c) {
+	getCell(c, r, f) {
 		if (f < 0 || f >= this.depth || r < 0 || r >= this.height || c < 0 || c >= this.width) return null;
 		return this.cells[f * this.width * this.height + r * this.width + c];
 	}
@@ -75,34 +72,35 @@ export default class Maze3D extends Maze {
 	}
 }
 class Corner extends CornerBase {
-	constructor(x, y, z) {
-		super(x, y);
-		this.z = z;
+	constructor(...coords) {
+		super(...coords);
+	}
+	get f() {
+		return this.coords[2];
 	}
 	get id() {
-		return `${this.x.toString().padStart(2,0)},${this.y.toString().padStart(2,0)},${this.z.toString().padStart(2,0)}`;
+		return this.coords.map(coord => coord.toString().padStart(2,0)).join(",");
 	}
 	toString(scale = 1) {
 		return this.id;
-		// return `${this.x * scale},${this.y * scale},${this.z * scale}`;
 	}
 	/**
-	 * Returns the coordinates x,y,z of the corner (of a cell frc) 
-	 * @param {array} frc - [floor, row, column] of the cell
+	 * Returns the coordinates f,r,c of the corner (of a cell crf) 
+	 * @param {array} crf - [floor, row, column] of the cell
 	 * @returns 
 	 */
-	static getCoords(frc, a = 0) {
+	static getCoords(crf, a = 0) {
 		const offset = [
 			[0, 0, 0],
-			[0, 0, 1],
-			[0, 1, 1],
-			[0, 1, 0],
 			[1, 0, 0],
+			[1, 1, 0],
+			[0, 1, 0],
+			[0, 0, 1],
 			[1, 0, 1],
 			[1, 1, 1],
-			[1, 1, 0],
+			[0, 1, 1],
 		][a];
-		var result = frc.reduce((acc, one, i) => { acc[i] += one; return acc}, [...offset]);
+		var result = crf.reduce((acc, one, i) => { acc[i] += one; return acc}, [...offset]);
 		return result;
 	}
 }
@@ -148,9 +146,6 @@ class Wall {
 		// var wall = wallIds.find(id);
 		// var wall = corners[0].walls.find(wall => wall.corners.includes(corners[1]) && wall.corners.includes(corners[3]));
 		if (wall) {
-			// console.log(walls.join("¶"));
-			// console.log(wall);
-			console.log(wall+"");
 			return wall;
 		}
 		// var start = corners[0];
@@ -189,25 +184,22 @@ class Wall {
 }
 Maze3D.Wall = Maze3D.prototype.Wall = Wall;
 class Cell extends CellBase {
+	constructor(...args) {
+		super(...args);
+	}
 	static fromCorners(...corners) {
 		var result = new this();
 		// Floor
-		console.log("Floor");
 		result.walls.push(Wall.fromCorners(corners.slice(0, 4), result));
 		// North
-		console.log("North");
 		result.walls.push(Wall.fromCorners([corners[0], corners[4], corners[5], corners[1]], result));
 		// East
-		console.log("East");
 		result.walls.push(Wall.fromCorners([corners[1], corners[5], corners[6], corners[2]], result));
 		// South
-		console.log("South");
 		result.walls.push(Wall.fromCorners([corners[2], corners[6], corners[7], corners[3]], result));
 		// West
-		console.log("West");
 		result.walls.push(Wall.fromCorners([corners[3], corners[7], corners[4], corners[0]], result));
 		// Ceiling
-		console.log("Ceiling");
 		result.walls.push(Wall.fromCorners(corners.slice(-4), result));
 		
 		// for (let j = 0; j < 2; j++) {

@@ -16,9 +16,10 @@
 	stroke-width: .3;
 	stroke: #000;
 	stroke-opacity: .3;
-	fill: transparent;
+	fill: #f001;
 	&.open {
 		stroke: #f000;
+		fill: #0f01;
 	}
 }
 .cell {

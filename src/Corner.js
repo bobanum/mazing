@@ -1,13 +1,17 @@
-import Point from "./Point.js";
-
-export default class Corner extends Point {
-	constructor(x, y) {
-		super(x, y);
+export default class Corner {
+	constructor(...coords) {
+		this.coords = coords;
 		this.walls = [];
 		this.rooms = [];
 	}
+	get c() {
+		return this.coords[0];
+	}
+	get r() {
+		return this.coords[1];
+	}
 	toString(scale = 1) {
-		return `${this.x * scale}, ${this.y * scale}`;
+		return [this.coords].map(coord => coord * scale).join(", ");
 	}
 	wallFrom(corner) {
 		return this.walls.find(wall => wall.start === corner);
@@ -19,11 +23,7 @@ export default class Corner extends Point {
 		return this.walls.find(wall => wall.start === corner || wall.end === corner);
 	}
 	appendWalls(...walls) {
-		// console.log(walls.join("¤"));
-		// console.log(this.id, this.walls.join("¤"));
-		// walls = walls.filter(wall => !this.walls.includes(wall));
 		this.walls.appendNew(...walls);
-		// console.log(this.walls.join("¤"));
 	}
 	appendCells(...rooms) {
 		rooms = rooms.filter(room => !this.rooms.includes(room));

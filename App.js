@@ -52,7 +52,7 @@ export default class App {
 		// });
 
 		Maze3D.rendererClass = "SVG3D";
-		var maze = new Maze3D(5, 5, 3);
+		var maze = new Maze3D(5, 6, 3);
 		maze.generate();
 		maze.render().then(renders => {
 			app.appendChild(renders.SVG3D);

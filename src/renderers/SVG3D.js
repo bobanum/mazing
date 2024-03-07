@@ -1,22 +1,22 @@
 import SVGRenderer from "./SVGRenderer.js";
 
-export default class SVG3D extends SVGRenderer {	
+export default class SVG3D extends SVGRenderer {
 	render() {
 		const maze = this.maze;
 		var result = this.createElement("svg.maze", {
-			viewBox: `${-maze.cellSize} ${-maze.cellSize} ${(maze.width + 2) * maze.cellWidth} ${((maze.height)+2) * maze.cellHeight}`,
+			viewBox: `${-maze.cellSize} ${-maze.cellSize} ${(maze.width + 2) * maze.cellWidth} ${((maze.height) + 2) * maze.cellHeight}`,
 		});
 		var rect = result.appendChild(this.createElement("rect"), {
 			fill: "#FF08",
 			x: 0,
 			y: 0,
-			width: maze.width * maze.cellWidth + (maze.height > 1 ? maze.cellSize*.5 : 0),
-			height: (maze.height+1/3) * maze.cellSize,
+			width: maze.width * maze.cellWidth + (maze.height > 1 ? maze.cellSize * .5 : 0),
+			height: (maze.height + 1 / 3) * maze.cellSize,
 		});
 		Promise.resolve().then(() => {
-			// result.appendChild(this.renderFloors(maze.cells));
+			result.appendChild(this.renderFloors(maze.cells));
 			// result.appendChild(this.renderCells(maze.cells));
-			result.appendChild(this.renderWalls(maze.walls));
+			// result.appendChild(this.renderWalls(maze.walls));
 			// result.appendChild(this.renderCorners(maze.corners));
 		});
 		result.obj = maze;
@@ -54,7 +54,7 @@ export default class SVG3D extends SVGRenderer {
 	renderWall(wall) {
 		var result = this.createElement("path.wall");
 		var d = wall.corners.reduce((d, corner, i) => {
-			d += `${corner.x + corner.z * .2},${corner.y + corner.z * .3} `;
+			d += `${corner.c + corner.f * .1},${corner.r + corner.f * .15} `;
 			return d;
 		}, "M ");
 		d += "Z";
@@ -68,9 +68,10 @@ export default class SVG3D extends SVGRenderer {
 	}
 	renderFloors(cells) {
 		var result = this.createElement("g.floors");
-		var cellsPerFloor = this.maze.width * this.maze.height;
-		for (let f=0; f<1; f++) {
-			result.appendChild(this.renderFloor(cells.slice(f*cellsPerFloor, (f+1)*cellsPerFloor)));
+		// var cellsPerFloor = this.maze.width * this.maze.height;
+		for (let f = 0; f < 1; f++) {
+			var cells = this.maze.cells.filter(cell => cell.f === f);
+			result.appendChild(this.renderFloor(cells.slice(f * cellsPerFloor, (f + 1) * cellsPerFloor)));
 		}
 		return result;
 	}

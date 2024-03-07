@@ -49,7 +49,8 @@ export default class SVGFlat extends SVGRenderer {
 	}
 	renderWall(wall) {
 		var result = this.createElement("path.wall");
-		result.setAttribute("d", wall.toString());
+		var vertices = wall.corners.map(corner => `${corner.c},${corner.r}`);
+		result.setAttribute("d", "M" + vertices.join(" "));
 		if (wall.open) {
 			result.classList.add("open");
 		}

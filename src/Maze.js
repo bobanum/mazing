@@ -76,7 +76,6 @@ export default class Maze {
 	}
 
 	addCell(...corners) {
-		debugger;
 		var cell = Cell.fromCorners(...corners);
 		this.appendCells(cell);
 		this.appendWalls(...cell.walls);
