@@ -1,25 +1,39 @@
 import Wall from './Wall.js';
 export default class Cell {
-	constructor(walls = []) {
-		this.walls = walls;
-		this.corners = walls.map(wall => wall.start);
+	constructor(coords) {
+		this.coords = coords;
+		this.walls = [];
+		this.corners = [];
+		// this.corners = walls.map(wall => wall.start);
 		this._visited = false;
 	}
 	toString(scale = 1) {
 		var result = this.walls.map(wall => wall.open);
 		return `[${result.join(",")}]`;
 	}
-	static fromCorners(...corners) {
-		var result = new this();
+	addCorner(...corners) {
 		for (let i = 0; i < corners.length; i++) {
 			let start = corners[i];
 			let end = corners[(i + 1) % corners.length];
-			let wall = Wall.fromCorners([start, end], result);
-			result.walls.push(wall);
+			// let wall = Wall.fromCorners([start, end], result);
+			let wall = new Wall();
+			wall.addCorners([start, end]);
+			this.walls.push(wall);
 		}
-		result.corners = corners;
-		return result;
+		this.corners = corners;
+		return this;
 	}
+	// static fromCorners(...corners) {
+	// 	var result = new this();
+	// 	for (let i = 0; i < corners.length; i++) {
+	// 		let start = corners[i];
+	// 		let end = corners[(i + 1) % corners.length];
+	// 		let wall = Wall.fromCorners([start, end], result);
+	// 		result.walls.push(wall);
+	// 	}
+	// 	result.corners = corners;
+	// 	return result;
+	// }
 	getAjoining(cell) {
 		return this.walls.find(wall => wall.cells.includes(cell));
 	}

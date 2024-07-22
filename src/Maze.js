@@ -35,7 +35,7 @@ export default class Maze {
 		var result = "";
 		for (let r = 0; r < this.height; r++) {
 			for (let c = 0; c < this.width; c++) {
-				let cell = this.getCell(r, c);
+				let cell = this.getCell(c, r);
 				result += cell.toString();
 			}
 			result += "\n";
@@ -56,9 +56,9 @@ export default class Maze {
 	}
 	generate() {
 		this.createCells();
-		var cell = this.getCell(Math.floor(this.height / 2), Math.floor(this.width / 2));
-		var cursor = new Cursor(this, cell);
-		cursor.run();
+		// var cell = this.getCell(Math.floor(this.height / 2), Math.floor(this.width / 2));
+		// var cursor = new Cursor(this, cell);
+		// cursor.run();
 	}
 	appendCorners(...corners) {
 		corners = corners.filter(corner => !this.corners.includes(corner));
@@ -75,13 +75,13 @@ export default class Maze {
 		this.cells.push(...cells);
 	}
 
-	addCell(...corners) {
-		var cell = Cell.fromCorners(...corners);
-		this.appendCells(cell);
-		this.appendWalls(...cell.walls);
-		this.appendCorners(...cell.corners);
-		return cell;
-	}
+	// addCell(...corners) {
+	// 	var cell = Cell.fromCorners(...corners);
+	// 	this.appendCells(cell);
+	// 	this.appendWalls(...cell.walls);
+	// 	this.appendCorners(...cell.corners);
+	// 	return cell;
+	// }
 
 	async render(scale = 10) {
 		var result = {};

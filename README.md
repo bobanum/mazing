@@ -72,3 +72,4 @@ import { Maze } from 'mazing';
 [ ] Multi-dimensional maze
 [ ] Custom cells or rooms shapes
 [ ] Voronoi maze
+

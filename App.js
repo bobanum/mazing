@@ -36,12 +36,12 @@ export default class App {
 	static main() {
 		var app = document.getElementById("app");
 
-		// SquareMaze.rendererClass = "SVGFlat";
-		// var maze = new SquareMaze(5, 5);
-		// maze.generate();
-		// maze.render().then(renders => {
-		// 	app.appendChild(renders.SVGFlat);
-		// });
+		SquareMaze.rendererClass = "SVGFlat";
+		var maze = new SquareMaze(5, 5);
+		maze.generate();
+		maze.render().then(renders => {
+			app.appendChild(renders.SVGFlat);
+		});
 
 		// HexMaze.rendererClass = "SVGFlat";
 		// var maze = new HexMaze(5, 5);
@@ -51,12 +51,12 @@ export default class App {
 		// 	app.appendChild(renders.SVGFlat);
 		// });
 
-		Maze3D.rendererClass = "SVG3D";
-		var maze = new Maze3D(5, 6, 3);
-		maze.generate();
-		maze.render().then(renders => {
-			app.appendChild(renders.SVG3D);
-		});
+		// Maze3D.rendererClass = "SVG3D";
+		// var maze = new Maze3D(5, 6, 3);
+		// maze.generate();
+		// maze.render().then(renders => {
+		// 	app.appendChild(renders.SVG3D);
+		// });
 
 		return;
 	}

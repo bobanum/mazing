@@ -31,6 +31,7 @@ export default class Maze3D extends Maze {
 						/*6*/ this.createCellCorner(crf, 6),
 						/*7*/ cellL?.corners[6] || this.createCellCorner(crf, 7),
 					];
+					let cell = new this.Cell(crf);
 					this.addCell(...corners);
 				}
 			}
