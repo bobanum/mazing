@@ -1,0 +1,27 @@
+#settings {
+	grid-area: settings;
+	background-color: hsl(60, 25%, 80%);
+	padding: 1em;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-gap: 0.25em 0.5em;
+	align-content: start;
+	>*{
+		grid-column: 1 / -1;
+	}
+	h1 {
+		font-size: 1.5em;
+		padding-bottom: .5em;
+		text-align: center;
+	}
+	>div {
+		display: grid;
+		grid-template: subgrid / subgrid;
+		label {
+			text-shadow: 0px 1px #fff;
+		}
+		>:not(label) {
+			width: 100%;
+		}
+	}
+}

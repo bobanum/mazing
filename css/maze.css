@@ -1,0 +1,46 @@
+:host > svg {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.corner {
+  fill: #f00;
+  fill-opacity: 0.5;
+  stroke: black;
+  stroke-width: 0;
+}
+.corner.wall-end {
+  fill: rgba(255, 255, 255, 0);
+}
+
+.wall {
+  stroke-width: 2;
+  stroke-width: 0;
+  stroke: #000;
+  stroke-linecap: round;
+}
+.wall.open {
+  stroke: rgba(255, 0, 0, 0);
+}
+.wall.tunnel {
+  stroke-width: 3;
+  stroke-opacity: 0.9;
+}
+
+.cell {
+  fill: #000;
+  stroke-width: 1;
+  stroke: #ff0;
+}
+.cell.visited {
+  fill: rgba(0, 255, 0, 0);
+}
+.cell.corridor {
+  fill: rgba(255, 0, 255, 0.5333333333);
+}
+.cell.dead-end {
+  fill: rgba(255, 0, 0, 0.2);
+}
+.cell.intersection {
+  fill: #ff0;
+}

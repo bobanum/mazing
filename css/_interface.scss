@@ -1,9 +1,11 @@
 #interface, .interface {
-	min-height: 100%;
+	height: 100vh;
 	display: grid;
-	grid-template-rows: auto auto 1fr auto;
+	grid-template-rows: auto 1fr auto;
+	grid-template-columns: 1fr auto;
+	grid-template-areas: "header header" "main settings" "footer footer";
 	& > header, & > footer {
-		padding: .5em 1em;
+		padding: .5em .5em;
 		background-color: hsl(var(--h), var(--s), 30%);
 		color: hsl(var(--h), var(--s), 100%);
 		display: flex;
@@ -11,12 +13,25 @@
 	}
 	& > header {
 		order: -1000;
+		grid-area: header;
 	}
 	& > nav {
-		background-color: hsl(var(--h), var(--s), 35%);
+		// background-color: hsl(var(--h), var(--s), 35%);
 		color: hsl(var(--h), var(--s), 100%);
+		grid-area: header;
+		place-self: center end;
+		margin: 0 .5em;
+	}
+	& > main {
+		grid-area: main;
 	}
 	& > footer {
 		order: 1000;
+		grid-area: footer;
+		img {
+			height: 1.5em;
+			filter: grayscale(1) brightness(1) invert(1);
+			mix-blend-mode: lighten;
+		}
 	}
 }

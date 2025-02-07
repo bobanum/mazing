@@ -1,41 +1,60 @@
+:host > svg {
+	max-height: 100%;
+	max-width: 100%;
+}
+
 .corner {
-	fill-opacity: 1;
+	fill: #f00;
+	fill-opacity: .5;
 	stroke: black;
 	stroke-width: 0;
+	// display: none;
+
 	&.wall-end {
 		fill: #fff0;
 		// stroke-width: 2;
 		// stroke: #f00;
 	}
 }
+
 .wall {
 	stroke-width: 2;
+	stroke-width: 0;
 	stroke: #000;
+	stroke-linecap: round;
+
 	&.open {
 		stroke: #f000;
 	}
+
 	&.tunnel {
 		stroke-width: 3;
 		stroke-opacity: .9;
 	}
+
 	// &.wall-end {
 	// 	stroke: #0f0f;
 	// }
 }
+
 .cell {
 	fill: #000;
 	stroke-width: 1;
-	// stroke: #ff0;
+
+	stroke: #ff0;
 	&.visited {
 		fill: #0f00;
-		
+
 	}
+
 	&.corridor {
 		fill: #f0f8;
 	}
+
 	&.dead-end {
 		fill: #f003;
 	}
+
 	&.intersection {
 		fill: #ff0;
 	}

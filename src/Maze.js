@@ -1,11 +1,13 @@
 import Cell from "./Cell.js";
 import Corner from "./Corner.js";
 import Wall from "./Wall.js";
+import Size from "./Size.js";
 
 export default class Maze {
 	static rendererClass = null;
 	constructor(width, height, cellSize = 10) {
 		this.allowTunnels = false;
+		// this.size = new Size(width, height);
 		this.width = width;
 		this.height = height;
 		this.cellSize = cellSize;
@@ -63,7 +65,10 @@ export default class Maze {
 	}
 
 	async render(scale = 10) {
+		this.createCells();
 		await Promise.resolve(this.constructor.rendererClass);
+		console.trace(this.constructor.rendererClass);
+		
 		const renderer = new this.constructor.rendererClass(this, scale);
 		var result = renderer.render();
 		return result;
@@ -71,7 +76,7 @@ export default class Maze {
 	findDeadEnds() {
 		return this.cells.filter(cell => cell.isDeadEnd);
 	}
-	decimate(ratio = .5, depth = 2) {
+	decimate(ratio = .5, depth = 1) {
 		var wallEnds = this.corners.filter(corner => corner.closedWalls.length === 1).shuffle();
 		wallEnds = wallEnds.slice(0, wallEnds.length * ratio);
 		wallEnds.forEach(wallEnd => {

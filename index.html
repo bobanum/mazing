@@ -5,17 +5,19 @@
 	<meta charset="UTF-8" />
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="./css/style.css" />
+	<script type="module" src="hex.js"></script>
 	<script type="module">
 		import App from "./App.js";
 		App.main();
 	</script>
-	<title>Application Javascript</title>
+	<title>Mazing</title>
 </head>
 
 <body>
 	<div id="interface">
 		<header>
-			<h1>Application Javascript</h1>
+			<img src="assets/logo_mazing.svg" alt="">
+			<h1>Mazing</h1>
 		</header>
 		<nav class="subheading">
 			<ul>
@@ -26,9 +28,32 @@
 			</ul>
 		</nav>
 		<!-- ⇓⇓⇓ Le HTML créé par programmation devrait apparaître là-dedans. ⇓⇓⇓ -->
-		<div class="body" id="app">
-		</div>
-		<footer><span>&copy; Web 3 : Dynamique</span><strong>Application Javascript</strong></footer>
+		<main id="app">
+			<hex-maze width="8" height="6"/>
+		</main>
+		<form action="" id="settings">
+			<h1>Settings</h1>
+			<div>
+				<label for="width">Type</label>
+				<select id="type" name="type">
+					<option value="square">Square</option>
+					<option value="hex">Hexagon</option>
+				</select>
+			</div>
+			<div>
+				<label for="width">Width</label>
+				<input type="number" id="width" name="width" value="20" min="1" max="100" />
+			</div>
+			<div>
+				<label for="height">Height</label>
+				<input type="number" id="height" name="height" value="10" min="1" max="100" />
+			</div>
+		</form>
+		<footer>
+			<img src="img/infinite-cowboy-logo.svg" alt="">
+			<span>&copy; Infinite Cowboy</span>
+			<strong>Mazing</strong>
+		</footer>
 	</div>
 </body>
 

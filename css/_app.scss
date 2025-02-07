@@ -1,3 +1,20 @@
 #app {
 	padding: 1em;
+	overflow: hidden;
+}
+
+#interface > header {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	gap: .25em;
+	font-size: 2em;
+	h1 {
+		font-size: 1em;
+		line-height: 1;
+	}
+	img {
+		height: 1.25em;
+		filter: brightness(0) invert(1);
+	}
 }

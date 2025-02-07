@@ -1,8 +1,9 @@
 import Point from "./Point.js";
 
 export default class Corner extends Point {
-	constructor(x, y) {
+	constructor(maze, x, y) {
 		super(x, y);
+		this.maze = maze;
 		this.walls = [];
 		this.rooms = [];
 	}

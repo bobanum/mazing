@@ -45,8 +45,8 @@ export default class Cursor {
 			newCell.visited = true;
 			const ajoining = cell.getAjoining(newCell);
 			ajoining.open = 3;
-			ajoining.svg.classList.add("open");
-			newCell.svg.classList.add("current");
+			// ajoining.svg.classList.add("open");
+			// newCell.svg.classList.add("current");
 		}
 	}
 }

@@ -1,15 +1,18 @@
 import Wall from './Wall.js';
 export default class Cell {
-	_visited = false;
-	constructor(walls = []) {
-		this.walls = walls;
-		this.corners = walls.map(wall => wall.start);
+	constructor(maze) {
+		this._visited = false;
+		this.maze = maze;
+		this.walls = [];
+		this.corners = [];
 	}
 	toString(scale = 1) {
 		var vertices = this.corners.map(corner => corner.toString(scale)).join(" ");
 		return `M ${vertices} z`;
 	}
 	static fromCorners(...corners) {
+		// console.log(corners);
+		
 		var result = new this();
 		for (let i = 0; i < corners.length; i++) {
 			let start = corners[i];
@@ -79,7 +82,7 @@ export default class Cell {
 	}
 	set visited(value) {
 		this._visited = value;
-		this.svg.classList.toggle("visited", value);
+		// this.svg.classList.toggle("visited", value);
 		return this;
 	}
 	
